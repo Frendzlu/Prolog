@@ -123,7 +123,7 @@ programRR :-
 fib(0, 1).
 fib(1, 1).
 fib(N, I, N1, N2, F) :-
-    write(N2), write(" "),
+    %write(N2), write(" "),
     (
         I < N,
         N3 is N2,
@@ -141,12 +141,12 @@ fibo(N, F) :-
     (
         fib(N, 1, 1, 1, Res)
     ),
+    write(Res),
     F is Res. 
 
 silnia(0, 1).
 silnia(N, NSil) :-
     N > 0, N1 is N-1, silnia(N1, S1), NSil is S1 * N.
-
 
 sum(Index, UpperBound, LowerBound, Function, Temporary, Result) :-
     (
@@ -162,9 +162,8 @@ sumHelper(Function, Index, Temporary, NewTemporary) :-
     NewTemporary is Temporary + Result.
 
 msquare(X, Result) :-
-    write(X mod 2),
     (
-        X mod 2 == 0,
+        X mod 2 =:= 0,
         Result is 0
     );
     Result is X*X.
