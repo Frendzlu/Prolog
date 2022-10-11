@@ -120,6 +120,7 @@ sumHelper(Function, Index, Temporary, NewTemporary) :-
 
 fibWrapper(X, Result) :-
     (
+        X mod 2 =:= 0,
         X1 is X-1,
         X2 is X-2,
         fib(X1, R1),
