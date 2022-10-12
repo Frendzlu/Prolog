@@ -17,6 +17,13 @@ del([H|X], [H|Y]) :- del(X, Y).
 
 shift([_|T], T).
 
+
+rvwrk([], Acc, Acc).
+rvwrk([H|T], Acc, Out) :- \+ [_|_] = H, \+ H = [], rvwrk(T, [H|Acc], Out).
+rvwrk([[H1|T1]|T2], Acc, Out) :- rvwrk([H1|T1], Acc, X), rvwrk(T2, [X|Acc], Out).
+%not really working
+revrs(A, X) :- rvwrk(A, [], X).
+
 % rvr([], []).
 % rvr([H|T], Z) :- 
 %     write(Z), nl,
@@ -33,8 +40,8 @@ shift([_|T], T).
 %     rvr(T, L2).
 insert(El, L1, [El|L1]).
 
-app(El, [], [El]).
-app(El, L1, [El|L1]).
+% app(El, [], [El]).
+% app(El, L1, [El|L1]).
     
 del(_, [], []).
 del(El, [El|T], Out) :- del(El, T, Out).
@@ -51,8 +58,13 @@ unique([B|T], [B|Out]) :-
     unique(X, Out).
 
 sum(A, B, X) :-
-    diff(A, B, D),
+    join(A, B, D),
     unique(D, X).
+
+common([], _, []).
+common(_, [], []).
+common([H1|T1], B, [X|Out]) :- isSubsetOf([H1], B), X = H1, common(T1, B, Out).
+common([H1|T1], B, Out) :- \+ isSubsetOf([H1], B), common(T1, B, Out). 
 
 diff(A, [], A).
 diff(A, [H|B], X) :-
