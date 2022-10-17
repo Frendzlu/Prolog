@@ -17,31 +17,17 @@ del([H|X], [H|Y]) :- del(X, Y).
 
 shift([_|T], T).
 
+reverseWorker([], Acc, Mode Acc).
+reverseWorker([H|T], Acc, Mode, Out) :- \+ [_|_] = H, \+ H = [], rvwrk(T, [H|Acc], Mode, Out).
+reverseWorker([[H1|T1]|T2], Acc, true, Out) :- reverseWorker([H1|T1], [], true, X), reverseWorker(T2, [X|Acc], true, Out). 
+reverseWorker([[H1|T1]|T2], Acc, false, Out) :- reverseWorker(T2, [X|Acc], false, Out).
+reverseNormal(A, X) :- rvwrk(A, [], false, X).
+reverseRecursively(A, X) :- reverseWorker(A, [], true, X).
 
-rvwrk([], Acc, Acc).
-rvwrk([H|T], Acc, Out) :- \+ [_|_] = H, \+ H = [], rvwrk(T, [H|Acc], Out).
-rvwrk([[H1|T1]|T2], Acc, Out) :- rvwrk([H1|T1], Acc, X), rvwrk(T2, [X|Acc], Out).
-%not really working
-revrs(A, X) :- rvwrk(A, [], X).
-
-% rvr([], []).
-% rvr([H|T], Z) :- 
-%     write(Z), nl,
-%     (nvr(Z), rvr(T, [H]));
-%     rvr(T, [Z|H]).
-% %not workimg
-
-% nvr(V) :-
-%     \+(\+(V=1)),
-%     \+(\+(V=0)).
-
-% unshift(L1, L2) :-
-%     rvr(L1, [_|T]),
-%     rvr(T, L2).
 insert(El, L1, [El|L1]).
 
-% app(El, [], [El]).
-% app(El, L1, [El|L1]).
+app(El, [], [El]).
+app(El, L1, X):- reverseNormal(L1, Y), reverseNormal([El|Y], X).
     
 del(_, [], []).
 del(El, [El|T], Out) :- del(El, T, Out).
