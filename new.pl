@@ -18,10 +18,10 @@ del([H|X], [H|Y]) :- del(X, Y).
 shift([_|T], T).
 
 reverseWorker([], Acc, Mode Acc).
-reverseWorker([H|T], Acc, Mode, Out) :- \+ [_|_] = H, \+ H = [], rvwrk(T, [H|Acc], Mode, Out).
+reverseWorker([H|T], Acc, Mode, Out) :- \+ [_|_] = H, \+ H = [], reverseWorker(T, [H|Acc], Mode, Out).
 reverseWorker([[H1|T1]|T2], Acc, true, Out) :- reverseWorker([H1|T1], [], true, X), reverseWorker(T2, [X|Acc], true, Out). 
 reverseWorker([[H1|T1]|T2], Acc, false, Out) :- reverseWorker(T2, [X|Acc], false, Out).
-reverseNormal(A, X) :- rvwrk(A, [], false, X).
+reverseNormal(A, X) :- reverseWorker(A, [], false, X).
 reverseRecursively(A, X) :- reverseWorker(A, [], true, X).
 
 insert(El, L1, [El|L1]).
