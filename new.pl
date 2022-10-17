@@ -12,15 +12,15 @@ divideListsBySum(L, L1, L2) :-
 last(X, [X]).
 last(X, [_|T]) :- last(X, T).
 
-del([X], []).
+del([_], []).
 del([H|X], [H|Y]) :- del(X, Y).
 
 shift([_|T], T).
 
-reverseWorker([], Acc, Mode Acc).
+reverseWorker([], Acc, _, Acc).
 reverseWorker([H|T], Acc, Mode, Out) :- \+ [_|_] = H, \+ H = [], reverseWorker(T, [H|Acc], Mode, Out).
 reverseWorker([[H1|T1]|T2], Acc, true, Out) :- reverseWorker([H1|T1], [], true, X), reverseWorker(T2, [X|Acc], true, Out). 
-reverseWorker([[H1|T1]|T2], Acc, false, Out) :- reverseWorker(T2, [X|Acc], false, Out).
+reverseWorker([H|T], Acc, false, Out) :- reverseWorker(T, [H|Acc], false, Out).
 reverseNormal(A, X) :- reverseWorker(A, [], false, X).
 reverseRecursively(A, X) :- reverseWorker(A, [], true, X).
 
