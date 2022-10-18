@@ -1,3 +1,7 @@
+:- encoding(utf8).
+:- op(600, xfy, [⊂]).
+:- op(600, xfy, [⊄]).
+
 splitIntoTwo(L, L1, L2) :-
     append(L1, L2, L),
     same_length(L1, L2).
@@ -47,16 +51,19 @@ sum(A, B, X) :-
     join(A, B, D),
     unique(D, X).
 
+⊂(A, B) :-
+    diff(A, B, X),
+    X = [].
+
+⊄(A, B) :- \+ A ⊂ B.
+
 common([], _, []).
 common(_, [], []).
-common([H1|T1], B, [X|Out]) :- isSubsetOf([H1], B), X = H1, common(T1, B, Out).
-common([H1|T1], B, Out) :- \+ isSubsetOf([H1], B), common(T1, B, Out). 
+common([H1|T1], B, [X|Out]) :- [H1] ⊂ B, X = H1, common(T1, B, Out).
+common([H1|T1], B, Out) :- [H1] ⊄ B, common(T1, B, Out). 
 
 diff(A, [], A).
 diff(A, [H|B], X) :-
     del(H, A, Out),
     diff(Out, B, X).   
 
-isSubsetOf(A, B) :-
-    diff(A, B, X),
-    X = [].
