@@ -80,4 +80,4 @@ subset([_|Tail], NTail):-
 
 
 srList(L, S, Res):-
-    findall(Acc, (subset(L, Acc), sumOf(Acc, S)), Res).
+    findall(Acc, (subset(L, Acc), sumOf(Acc, S), length(Acc, 3)), Res).
