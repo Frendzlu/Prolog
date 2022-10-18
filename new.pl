@@ -37,7 +37,6 @@ del(_, [], []).
 del(El, [El|T], Out) :- del(El, T, Out).
 del(El, [NotEl|T], [NotEl|Out]) :- \+ El = NotEl, del(El, T, Out).
 
-join([], [], []).
 join([], L1, L1).
 join(L1, [], L1).
 join([H1|T1], [H2|T2], [H1|[H2|Out]]) :- join(T1, T2, Out).
@@ -58,7 +57,6 @@ sum(A, B, X) :-
 ⊄(A, B) :- \+ A ⊂ B.
 
 common([], _, []).
-common(_, [], []).
 common([H1|T1], B, [X|Out]) :- [H1] ⊂ B, X = H1, common(T1, B, Out).
 common([H1|T1], B, Out) :- [H1] ⊄ B, common(T1, B, Out). 
 
