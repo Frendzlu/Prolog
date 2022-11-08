@@ -81,3 +81,56 @@ mLet:-
     atom_chars(W, L),
     writeln(W), 
     write('Długość słowa: '), writeln(I).
+
+program :-
+    open('C:\\Users\\4P1\\Pikoń\\Prolog\\filename.txt',read,FdIn),
+    current_input(I),
+    set_input(FdIn),
+    czytajPlik(LiczbaZnakow),
+    close(FdIn),
+    set_input(I),
+    nl,
+    write('Plik zawiera: '), write(LiczbaZnakow), write(' znakow.').
+ 
+czytajPlik(X) :-
+    get_char(Ch), czytajZnak(Ch,0,X).
+ 
+czytajZnak(Ch,Lp,Lk) :-
+    Ch = end_of_file,
+    Lp = Lk.
+ 
+czytajZnak(_,Lp,Lk) :-
+    L is Lp + 1,
+    get_char(X),
+    czytajZnak(X,L,Lk).
+
+programCopy :-
+    open('d:/tmp/dane1.txt', read, FileInput),
+    open('d:/tmp/dane2.txt', write, FileOutput),
+    current_input(I), current_output(O),
+    set_input(FileInput), set_output(FileOutput),
+    get_char(_Ch), kopia(_Ch, LiczbaZnakow),
+    close(FileInput), close(FileOutput),
+    set_input(I), set_output(O),
+    nl, write(' Zostalo skopiowanych: |'),
+    write(LiczbaZnakow), write('| znakow').
+
+kopia(Ch, LiczbaZnakow) :-
+    Ch=end_of_file,
+    LiczbaZnakow is 0, 
+    !.
+kopia(Ch, LiczbaZnakow) :-
+    \+ Ch = end_of_file, 
+    kopiujZnak(Ch, _LiczbaCh),
+    LiczbaZnakow is _LiczbaCh + 1,
+    !.
+
+kopiujZnak(Ch, 0) :-
+    Ch=end_of_file,
+    !.
+
+kopiujZnak(_Ch, LiczbaCh) :-
+    put_char(_Ch), 
+    get_Char(Ch), 
+    kopiujZnak(Ch, L),
+    LiczbaCh is L + 1.
