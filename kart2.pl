@@ -1,13 +1,5 @@
-reverseWorker([], Acc, Acc).
-reverseWorker([H|T], Acc, Out) :- \+ [_|_] = H, \+ H = [], reverseWorker(T, [H|Acc], Out).
-reverseWorker([H|T], Acc, Out) :- reverseWorker(T, [H|Acc], Out).
-reverseNormal(A, X) :- reverseWorker(A, [], X).
-
 dodajNaKoniec(El, [], [El]).
-dodajNaKoniec(Element, L_input, L_Output) :- 
-    reverseNormal(L_input, Y), 
-    reverseNormal([Element|Y], L_Output),
-    !.
+dodajNaKoniec(El, [H1|T1], [H1|T2]):- dodajNaKoniec(El, T1, T2).
 
 sumaWorker([], 0, _).
 sumaWorker([_|L], Suma, I) :-
