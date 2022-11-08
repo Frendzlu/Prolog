@@ -47,4 +47,37 @@ mNum:-
     atom_chars(W, L),
     writeln(W), 
     writeln('Liczba cyfr: '), writeln(I).
-    
+
+findUpperCase([H1|L1], [H2|L2], Goal, H2) :-
+    H1 == Goal.
+findUpperCase([H1|L1], [H2|L2], Goal, Result) :-
+    \+ H1 == Goal,
+    findUpperCase(L1, L2, Goal, Result).
+
+uppercase(A, B) :-
+    atom_chars(qabcdefghijklmnoprstuwxyzęóąśłżźćń, LowerList),
+    atom_chars(qABCDEFGHIJKLMNOPRSTUWXYZĘÓĄŚŁŻŹĆŃ, UpperList),
+    [A] ⊂ LowerList,
+    \+ [A] ⊂ [q],
+    findUpperCase(LowerList, UpperList, A, B).
+uppercase(A, A) :-
+    atom_chars(qabcdefghijklmnoprstuwxyzęóąśłżźćń, LowerList),
+    atom_chars(qABCDEFGHIJKLMNOPRSTUWXYZĘÓĄŚŁŻŹĆŃ, UpperList),
+    \+ [A] ⊂ LowerList.
+    \+ [A] ⊂ [q].
+uppercase(q, 'Q').
+
+readLet('\n', [], 0):- !.
+readLet(Ch, [ResCh|L], I):-
+    uppercase(Ch, ResCh),
+    %write(ResCh),
+    get_char(Ch2),
+    readLet(Ch2, L, J),
+    I is J+1.
+
+mLet:- 
+    get_char(Ch),
+    readLet(Ch, L, I),
+    atom_chars(W, L),
+    writeln(W), 
+    write('Długość słowa: '), writeln(I).
