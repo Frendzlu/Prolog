@@ -23,9 +23,8 @@ addFactsFamily :-
 getInt(N) :- 
     get_char(Ch),
     getIntRest(Ch, L), 
-    number_chars(N, L)
+    number_chars(N, L).
     
-
 getIntRest('\n', []).
 getIntRest(Ch1, [Ch1|T]) :-
     isDigit(Ch1),
